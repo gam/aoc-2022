@@ -7,22 +7,30 @@
 (def real-input (aoc/fetch-data "puzzle-day1.txt"))
 
 (defn ->elves [input]
+  "Split the input string into tokens 
+   representing individual elves."
   (str/split input #"\n\n"))
 
 (defn parse-elf [elf]
+  "Parse the input data for a single `elf` to
+   find the number of `calories` for the items 
+   of food they carry, returning the sum."
   (->> elf
        str/split-lines
        (map aoc/->int)
        (apply +)))
 
 (defn solve-1 [input]
+  "Solver for part 1"
   (->> input
        ->elves
        (map parse-elf)
        (sort >)
        first))
 
-(defn solve-2 [input]
+(defn solve-2
+  "Solver for part 2"
+  [input]
   (->> input
        ->elves
        (map parse-elf)
