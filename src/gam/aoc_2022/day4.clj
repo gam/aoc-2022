@@ -33,7 +33,11 @@
   (or (set/subset? set1 set2)
       (set/subset? set2 set1)))
 
-(defn- has-overlap? [[set1 set2]]
+(defn- has-overlap?
+  "Determine whether there is overlap between the pair of sets provided. 
+   Is not a true predicate, due to using the Clojure idiom of using
+   `(seq coll)` to determine if `coll` is empty."
+  [[set1 set2]]
   (seq (set/intersection set1 set2)))
       
 (defn solve-1 [input]
