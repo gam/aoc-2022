@@ -12,6 +12,11 @@
    :paper 2
    :scissors 3})
 
+(def result-value
+  {:win 6
+   :draw 3
+   :loss 0})
+
 (def code->move
   {"A" :rock
    "B" :paper
@@ -32,51 +37,58 @@
 
 (def losing-moves (set/map-invert winning-moves))
 
-(def result-value
-  {:win 6
-   :draw 3
-   :loss 0})
-
-(defn game-result [move1 move2]
+(defn game-result
+  "Determine if the given combination of moves
+   results in a `:win`, a `:draw` or a `:loss` 
+   for the one making `move2`."
+  [move1 move2]
   (cond
     (= move1 move2) :draw
     (= (winning-moves move1) move2) :win
     :else :loss))
 
-(defn game-score-1 [[p1 p2]]
-  (let [move1 (code->move p1)
-        move2 (code->move p2)]
-    (+ (result-value (game-result move1 move2))
-       (move-value move2))))
+(defn game-score
+  "Calculate the score for a single game, 
+   given two moves, each of which is either
+   `:rock`, `:paper` or `:scissors`"
+  [[move1 move2]]
+  (+ (result-value (game-result move1 move2))
+     (move-value move2)))
 
-(defn decode-move [p1 p2]
-  (let [move (code->move p1)
-        outcome (code->outcome p2)]
-    (condp = outcome
-      :draw move
-      :win (winning-moves move)
-      :loss (losing-moves move))))
+(defn convert-moves-1 
+  "Translate the codes for a game to the 
+   moves they represent."
+  [moves]
+  (map code->move moves))
 
-(defn game-score-2 [[p1 p2]]
-  (let [move1 (code->move p1)
-        move2 (decode-move p1 p2)]
-    (+ (result-value (game-result move1 move2))
-       (move-value move2))))
+(defn convert-moves-2 
+  "Translate the codes for a game to the opponent move 
+   and game outcome they represent, returning the 
+   corresponding moves."
+  [[code1 code2]]
+  (let [move1 (code->move code1)
+        move2 (condp = (code->outcome code2)
+                :draw move1
+                :win (winning-moves move1)
+                :loss (losing-moves move1))]
+    [move1 move2]))
 
-(defn solve-1 [input]
+(defn- parse-input [input]
   (->> input
        str/split-lines
-       (map #(str/split % #" "))
-       (map game-score-1)
+       (map #(str/split % #" "))))
+
+(defn solve-1 [input]
+  (->> (parse-input input)
+       (map convert-moves-1)
+       (map game-score)
        (apply +)))
 
 (defn solve-2 [input]
-  (->> input
-       str/split-lines
-       (map #(str/split % #" "))
-       (map game-score-2)
+  (->> (parse-input input)
+       (map convert-moves-2)
+       (map game-score)
        (apply +)))
-
 
 (deftest aoc-2021.day2
   (testing solve-1
