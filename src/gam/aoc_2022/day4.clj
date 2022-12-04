@@ -39,24 +39,20 @@
    `(seq coll)` to determine if `coll` is empty."
   [[set1 set2]]
   (seq (set/intersection set1 set2)))
-      
-(defn solve-1 [input]
-  (->> input
+
+(defn- solve [input predicate]
+    (->> input
        str/split-lines
        (map #(str/split % #","))
        (map make-sets)
-       (map has-subset?)
-       (filter identity)
+       (filter predicate)
        count))
+ 
+(defn solve-1 [input]
+  (solve input has-subset?))
 
 (defn solve-2 [input]
-  (->> input
-       str/split-lines
-       (map #(str/split % #","))
-       (map make-sets)
-       (map has-overlap?)
-       (filter identity)
-       count))
+  (solve input has-overlap?))
 
 (deftest aoc-2021.day2
   (testing solve-1
