@@ -7,11 +7,24 @@
 (def demo-input (aoc/fetch-data "demo-day4.txt"))
 (def real-input (aoc/fetch-data "puzzle-day4.txt"))
 
-(defn- expand-range [range-string]
+(defn- expand-range 
+  "Take an incoming string representing a range, e.g. `2-4`,
+   and return the corresponding sequence of characters from 
+   the first to the last value (inclusive)."
+  [range-string]
   (let [[from to] (str/split range-string #"-")]
     (range (->int from) (inc (->int to)))))
 
-(defn make-sets [pair]
+(defn- make-sets 
+  "Take a pair of type `[\"2-4\" \"3-7\"]`, expand each
+   range string to the corresponding sequence of integers,
+   and convert the result to a set. 
+   Return the sequence of sets.
+   In the above example, the result should be:
+   ```
+   (#{2 3 4} #{3 4 5 6 7})
+   ```"
+  [pair]
   (->> pair
       (map expand-range)
       (map set)))
