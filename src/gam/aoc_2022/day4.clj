@@ -1,11 +1,11 @@
 (ns gam.aoc-2022.day4
   (:require [clojure.string :as str]
             [clojure.set :as set]
-            [gam.aoc :refer [->int]]
+            [gam.aoc :refer [->int fetch-data]]
             [clojure.test :refer [deftest is testing]]))
 
-(def demo-input (aoc/fetch-data "demo-day4.txt"))
-(def real-input (aoc/fetch-data "puzzle-day4.txt"))
+(def demo-input (fetch-data "demo-day4.txt"))
+(def real-input (fetch-data "puzzle-day4.txt"))
 
 (defn- expand-range 
   "Take an incoming string representing a range, e.g. `2-4`,
