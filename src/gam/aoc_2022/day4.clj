@@ -2,7 +2,7 @@
   (:require [clojure.string :as str]
             [clojure.set :as set]
             [gam.aoc :refer [->int fetch-data]]
-            [clojure.test :refer [deftest is testing]]))
+            [clojure.test :refer [deftest is are testing]]))
 
 (def demo-input (fetch-data "demo-day4.txt"))
 (def real-input (fetch-data "puzzle-day4.txt"))
@@ -60,6 +60,24 @@
     (is (= (solve-1 real-input) 571)))
   (testing solve-2
     (is (= (solve-2 demo-input) 4))
-    (is (= (solve-2 real-input) 917))))
+    (is (= (solve-2 real-input) 917)))
+  (testing has-subset?
+    (is (= (has-subset? [#{1 2 3}   #{2 3 4}]) false) "Overlap, but no subset")
+    (is (= (has-subset? [#{1 2 3 4} #{2 3 4}]) true)  "B is subset of A")
+    (is (= (has-subset? [#{3 4}     #{2 3 4}]) true)  "A is subset of B")
+    (is (= (has-subset? [#{}        #{}])      true)  "Empty sets are subsets of each other")
+    (is (= (has-subset? [#{}        #{1}])     true)  "Empty sets are subsets of all sets"))
+  (testing has-overlap?
+    (is (= (has-overlap? [#{1 2 3}   #{2 3 4}]) true)  "Overlap, but no subset")
+    (is (= (has-overlap? [#{1 2 3 4} #{2 3 4}]) true)  "Overlap; B is subset of A")
+    (is (= (has-overlap? [#{3 4}     #{2 3 4}]) true)  "Overlap; A is subset of B")
+    (is (= (has-overlap? [#{3 4}     #{1 2}])   false) "No overlap")
+    (is (= (has-overlap? [#{}        #{}])      false) "Empty sets; no overlap"))
+  (testing expand-range
+    (are [range-string result] (= result (expand-range range-string))
+      "2-4" '(2 3 4)
+      "5-8" '(5 6 7 8)
+      "1-1" '(1)
+      "1-2" '(1 2))))
 
 (clojure.test/run-tests)
