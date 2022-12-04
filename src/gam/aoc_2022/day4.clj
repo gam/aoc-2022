@@ -54,7 +54,7 @@
 (defn solve-2 [input]
   (solve input has-overlap?))
 
-(deftest aoc-2021.day2
+(deftest aoc-2021.day4
   (testing solve-1
     (is (= (solve-1 demo-input) 2))
     (is (= (solve-1 real-input) 571)))
