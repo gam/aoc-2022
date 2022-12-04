@@ -35,10 +35,10 @@
 
 (defn- has-overlap?
   "Determine whether there is overlap between the pair of sets provided. 
-   Is not a true predicate, due to using the Clojure idiom of using
-   `(seq coll)` to determine if `coll` is empty."
+   Coercing to boolean, since the Clojure idiom of using `(seq coll)` to 
+   determine if `coll` is empty is not a true predicate."
   [[set1 set2]]
-  (seq (set/intersection set1 set2)))
+  (boolean (seq (set/intersection set1 set2))))
 
 (defn- solve [input predicate]
     (->> input
