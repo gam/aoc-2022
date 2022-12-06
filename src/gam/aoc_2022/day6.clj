@@ -2,13 +2,7 @@
   (:require [gam.aoc :refer [fetch-data]]
             [clojure.test :refer [deftest is testing]]))
 
-(def examples ["mjqjpqmgbljsphdztnvjfqwrcgsmlb"
-               "bvwbjplbgvbhsrlpgdmjqwftvncz"
-               "nppdvjthqldpwncqszvftbrmjlhg"
-               "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"
-               "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"])
-
-(def demo-input (first examples))
+(def demo-input "mjqjpqmgbljsphdztnvjfqwrcgsmlb")
 (def real-input (fetch-data "puzzle-day6.txt"))
 
 (defn find-marker [marker-length input]
