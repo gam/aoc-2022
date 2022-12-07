@@ -1,7 +1,7 @@
 (ns gam.aoc-2022.day5
   (:require [clojure.string :as str]
             [gam.aoc :refer [->int fetch-data]]
-            [clojure.test :refer [deftest is are testing]]))
+            [clojure.test :refer [deftest is testing]]))
 
 (def demo-input (fetch-data "demo-day5.txt"))
 (def real-input (fetch-data "puzzle-day5.txt"))
