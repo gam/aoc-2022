@@ -5,12 +5,21 @@
 (def demo-input "mjqjpqmgbljsphdztnvjfqwrcgsmlb")
 (def real-input (fetch-data "puzzle-day6.txt"))
 
-(defn find-marker [marker-length input]
-  (loop [idx 0
-         s input]
-    (if (apply distinct? (take marker-length s))
-      (+ marker-length idx)
-      (recur (inc idx) (rest s)))))
+#_(defn find-marker [n input]
+    (loop [idx 0
+           s input]
+      (if (apply distinct? (take n s))
+        (+ n idx)
+        (recur (inc idx) (rest s)))))
+
+(defn find-marker [length input]
+  (letfn [(check-candidate [idx candidate]
+                           (when (apply distinct? candidate)
+                             (+ idx length)))]
+    (->> input
+         (partition length 1)
+         (keep-indexed check-candidate)
+         first)))
 
 (defn solve-1 [input]
   (find-marker 4 input))
