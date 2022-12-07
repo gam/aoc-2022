@@ -8,7 +8,7 @@
 (defn find-marker [marker-length input]
   (loop [idx 0
          s input]
-    (if (= marker-length (count (set (take marker-length s))))
+    (if (apply distinct? (take marker-length s))
       (+ marker-length idx)
       (recur (inc idx) (rest s)))))
 
