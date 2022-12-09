@@ -1,5 +1,6 @@
 .calva/output-window/
 .classpath
+.clj-kondo/
 .clj-kondo/.cache
 .cpcache
 .DS_Store
